@@ -1,14 +1,14 @@
 import config from './config';
 import InfiniteLoading from './components/InfiniteLoading.vue';
 
-function syncModeFromVue(Vue) {
-  config.mode = Vue.config.productionTip ? 'development' : 'production';
+function syncModeFromVue(app) {
+  config.mode = (app.config && app.config.isCustomElement) ? 'development' : (process.env.NODE_ENV === 'production' ? 'production' : 'development');
 }
 
 Object.defineProperty(InfiniteLoading, 'install', {
   configurable: false,
   enumerable: false,
-  value(Vue, options) {
+  value(app, options) {
     // override default props
     Object.assign(config.props, options && options.props);
 
@@ -19,15 +19,15 @@ Object.defineProperty(InfiniteLoading, 'install', {
     Object.assign(config.system, options && options.system);
 
     // register component
-    Vue.component('infinite-loading', InfiniteLoading);
+    app.component('infinite-loading', InfiniteLoading);
 
-    syncModeFromVue(Vue);
+    syncModeFromVue(app);
   },
 });
 
 // register component automatically if there has global Vue
 /* istanbul ignore else */
-if (typeof window !== 'undefined' && window.Vue) {
+if (typeof window !== 'undefined' && window.Vue && window.Vue.component) {
   window.Vue.component('infinite-loading', InfiniteLoading);
   syncModeFromVue(window.Vue);
 }
