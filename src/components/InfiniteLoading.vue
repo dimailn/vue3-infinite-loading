@@ -108,7 +108,7 @@ export default defineComponent({
           // has slot and slot is pure text node
           || (
             this.$slots[name]
-            && !this.$slots[name]()[0].tag
+            && (!this.$slots[name]()[0] || typeof this.$slots[name]()[0].type === 'symbol')
           )
         ) {
           // only apply default styles for pure text slot
@@ -119,6 +119,7 @@ export default defineComponent({
       return styles;
     },
   },
+  emits: ['infinite'],
   props: {
     distance: {
       type: Number,
@@ -327,6 +328,8 @@ export default defineComponent({
       if (!result) {
         if (!elm || elm.tagName === 'BODY') {
           result = window;
+        } else if (elm.nodeType !== 1) {
+          // Skip non-elements
         } else if (!this.forceUseInfiniteWrapper && ['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
           result = elm;
         } else if (elm.hasAttribute('infinite-wrapper') || elm.hasAttribute('data-infinite-wrapper')) {
@@ -337,7 +340,7 @@ export default defineComponent({
       return result || this.getScrollParent(elm.parentNode);
     },
   },
-  destroyed() {
+  unmounted() {
     /* istanbul ignore else */
     if (!this.status !== STATUS.COMPLETE) {
       throttleer.reset();

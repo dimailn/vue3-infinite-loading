@@ -52,10 +52,13 @@ const SPINNERS = {
 
 export default {
   name: 'Spinner',
+  props: {
+    spinner: String,
+  },
   computed: {
     spinnerView() {
       return (
-        SPINNERS[(this.$attrs.spinner || '').toUpperCase()]
+        SPINNERS[(this.spinner || '').toUpperCase()]
         || this.spinnerInConfig // fallback to spinner of config
       );
     },
@@ -66,7 +69,7 @@ export default {
         // as spinner slot config a pure text spinner
         result = {
           render() {
-            return this._v(config.slots.spinner); // eslint-disable-line no-underscore-dangle
+            return config.slots.spinner;
           },
         };
       } else if (typeof config.slots.spinner === 'object') {
