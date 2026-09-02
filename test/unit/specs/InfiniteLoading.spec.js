@@ -297,26 +297,26 @@ describe('vue-infinite-loading:component', () => {
     vm.$mount('#app');
   });
 
-  it('should still works properly with the deprecated property `:on-infinite` but throw warning', (done) => {
-    let isThrowWarn;
+  it('should handle the `@infinite` event without a deprecated property warning', (done) => {
+    let isThrowWarn = false;
 
     console.warn = fakeBox(console.warn, (text) => {
-      if (text.indexOf('@infinite') > -1) {
+      if (text.indexOf(':on-infinite') > -1) {
         isThrowWarn = true;
       }
     });
 
     vm = new Vue(Object.assign({}, basicConfig, {
       methods: {
-        onInfinite: function onInfinite() {
-          expect(isThrowWarn).to.be.true;
+        infiniteHandler: function infiniteHandler() {
+          expect(isThrowWarn).to.not.be.true;
           console.warn = fakeBox();
           done();
         },
       },
       template: `
         <infinite-loading
-          :on-infinite="onInfinite"
+          @infinite="infiniteHandler"
           >
         </infinite-loading>
       `,
