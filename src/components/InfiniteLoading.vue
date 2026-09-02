@@ -58,7 +58,7 @@ import config, {
 import {
   warn, throttleer, loopTracker, scrollBarStorage, kebabCase, isVisible,
 } from '../utils';
-import eventBus from '../event-bus'
+import createEventBus from '../event-bus'
 
 export default defineComponent({
   name: 'InfiniteLoading',
@@ -144,7 +144,7 @@ export default defineComponent({
     },
   },
   created() {
-    this.bus = eventBus
+    this.bus = createEventBus()
   },
   mounted() {
     this.$watch('forceUseInfiniteWrapper', () => {
