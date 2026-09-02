@@ -36,12 +36,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/justforuse/vue3-infinite-loading.git"
+    "url": "git+https://github.com/dimailn/vue3-infinite-loading.git"
   },
   "bugs": {
-    "url": "https://github.com/justforuse/vue3-infinite-loading/issues"
+    "url": "https://github.com/dimailn/vue3-infinite-loading/issues"
   },
-  "homepage": "https://github.com/justforuse/vue3-infinite-loading",
+  "homepage": "https://github.com/dimailn/vue3-infinite-loading",
   "dependencies": {
     "tiny-emitter": "^2.1.0"
   },
