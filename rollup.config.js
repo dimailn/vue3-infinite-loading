@@ -13,7 +13,11 @@ export default [
       {
         format: 'umd',
         file: 'lib/index.umd.js',
-        name: 'Vue3InfiniteLoading'
+        name: 'Vue3InfiniteLoading',
+        globals: {
+          vue: 'Vue',
+          'tiny-emitter': 'TinyEmitter'
+        }
       }
     ],
     plugins: [

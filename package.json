@@ -16,7 +16,7 @@
   "scripts": {
     "serve": "vite",
     "dev": "webpack-dev-server --config scripts/webpack.config.js --hot --info=false --port 8000",
-    "build": "NODE_ENV=production webpack --config scripts/webpack.config.js -p --progress --hide-modules",
+    "build": "rollup -c",
     "build:lib": "rollup -c",
     "docs:dev": "npm run build:lib && vitepress dev docs",
     "docs:build": "npm run build:lib && vitepress build docs",
