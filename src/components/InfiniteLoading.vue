@@ -137,7 +137,6 @@ export default defineComponent({
     identifier: {
       default: +new Date(),
     },
-    onInfinite: Function,
   },
   watch: {
     identifier() {
@@ -236,10 +235,6 @@ export default defineComponent({
         throttleer.reset();
       },
     };
-
-    if (this.onInfinite) {
-      warn(WARNINGS.INFINITE_EVENT);
-    }
   },
   /**
    * To adapt to keep-alive feature, but only work on Vue 2.2.0 and above, see: https://vuejs.org/v2/api/#keep-alive
@@ -276,11 +271,7 @@ export default defineComponent({
           });
         }
 
-        if (typeof this.onInfinite === 'function') {
-          this.onInfinite.call(null, this.stateChanger);
-        } else {
-          this.$emit('infinite', this.stateChanger);
-        }
+        this.$emit('infinite', this.stateChanger);
 
         if (isContinuousCall && !this.forceUseInfiniteWrapper && !loopTracker.isChecked) {
           // check this component whether be in an infinite loop if it is not checked
